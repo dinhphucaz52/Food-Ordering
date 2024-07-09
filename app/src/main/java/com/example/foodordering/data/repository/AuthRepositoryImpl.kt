@@ -1,8 +1,8 @@
 package com.example.foodordering.data.repository
 
-import com.example.foodordering.AppModule
 import com.example.foodordering.data.dto.ResponseDTO
 import com.example.foodordering.data.dto.UserDTO
+import com.example.foodordering.data.remote.ApiService
 import com.example.foodordering.domain.repository.AuthRepository
 import com.example.foodordering.util.AppResource
 import retrofit2.Call
@@ -11,7 +11,9 @@ import retrofit2.Response
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class AuthRepositoryImpl : AuthRepository {
+class AuthRepositoryImpl(
+    private val apiService: ApiService
+) : AuthRepository {
 
     override suspend fun login(email: String, password: String): AppResource<UserDTO> {
         return suspendCoroutine { continuation ->
@@ -19,7 +21,7 @@ class AuthRepositoryImpl : AuthRepository {
             body["email"] = email
             body["password"] = password
 
-            AppModule.provideApiService().signIn(body).enqueue(object :
+            apiService.signIn(body).enqueue(object :
                 Callback<ResponseDTO<UserDTO>> {
                 override fun onResponse(
                     call: Call<ResponseDTO<UserDTO>>,
@@ -29,7 +31,7 @@ class AuthRepositoryImpl : AuthRepository {
                         val responseBody = response.body()
                         if (responseBody != null) {
                             if (responseBody.result == 1) {
-                                continuation.resume(AppResource.Success(responseBody.data!!))
+                                continuation.resume(AppResource.Success(responseBody.data))
                             } else {
                                 continuation.resume(AppResource.Error(responseBody.message))
                             }
@@ -42,7 +44,8 @@ class AuthRepositoryImpl : AuthRepository {
                 }
 
                 override fun onFailure(call: Call<ResponseDTO<UserDTO>>, t: Throwable) {
-                    continuation.resume(AppResource.Error("Request failed"))
+                    val message = t.message
+                    message?.let { AppResource.Error(it) }?.let { continuation.resume(it) }
                 }
             }
             )
@@ -61,7 +64,7 @@ class AuthRepositoryImpl : AuthRepository {
             body["email"] = email
             body["password"] = password
 
-            AppModule.provideApiService().signUp(body).enqueue(object :
+            apiService.signUp(body).enqueue(object :
                 Callback<ResponseDTO<UserDTO>> {
                 override fun onResponse(
                     call: Call<ResponseDTO<UserDTO>>,

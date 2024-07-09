@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
@@ -21,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.foodordering.ui.component.TopAppBarHome
 import com.example.foodordering.ui.screen.customer.component.Categories
 import com.example.foodordering.ui.screen.customer.component.FoodRecyclerView
@@ -30,6 +32,7 @@ import com.example.foodordering.ui.theme.DarkColorScheme
 @Composable
 fun HomeScreen(
     onSearch: (String) -> Unit,
+    viewModel: HomeViewModel = viewModel()
 ) {
     Column(
         modifier = Modifier
@@ -89,6 +92,13 @@ fun HomeScreen(
             )
 
             FoodRecyclerView()
+
+            Button(onClick = {
+                viewModel.getCart()
+            }) {
+                Text(text = "Add Cart")
+            }
+
         }
 
     }
@@ -98,7 +108,7 @@ fun HomeScreen(
 @Composable
 @Preview
 fun HomeScreenPreview() {
-    HomeScreen {}
+    HomeScreen({})
 }
 
 

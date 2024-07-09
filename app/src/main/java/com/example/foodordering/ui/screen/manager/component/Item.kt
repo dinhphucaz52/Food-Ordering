@@ -26,8 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.foodordering.R
-import com.example.foodordering.ui.screen.manager.home.FakeData
-import com.example.foodordering.ui.screen.manager.home.data.Invoice
+import com.example.foodordering.util.FakeData
+import com.example.foodordering.ui.screen.manager.data.Invoice
 import com.example.foodordering.ui.theme.DarkColorScheme
 
 

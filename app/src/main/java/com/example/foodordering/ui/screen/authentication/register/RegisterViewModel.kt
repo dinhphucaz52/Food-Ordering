@@ -3,13 +3,14 @@ package com.example.foodordering.ui.screen.authentication.register
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.foodordering.AppModule
+import com.example.foodordering.di.AppModule
 import com.example.foodordering.util.AppResource
+import com.example.foodordering.util.AuthHelper
 import kotlinx.coroutines.launch
 
 class RegisterViewModel : ViewModel() {
 
-    private val repository = AppModule.provideAuthenticationRepository()
+    private val repository = AppModule.provideAuthRepository()
 
     val username = mutableStateOf("")
     val password = mutableStateOf("")
@@ -25,6 +26,14 @@ class RegisterViewModel : ViewModel() {
 
     fun register() {
         viewModelScope.launch {
+
+            if (
+                AuthHelper.validateEmail(email.value) &&
+                AuthHelper.validatePassword(password.value) &&
+                AuthHelper.validatePhoneNumber(phoneNumber.value) &&
+                AuthHelper.validateUsername(username.value)
+            )
+                return@launch
 
             val result =
                 repository.register(username.value, email.value, password.value, phoneNumber.value)

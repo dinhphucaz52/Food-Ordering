@@ -10,11 +10,11 @@ object AuthHelper {
         return password.matches(Regex("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{6,}$"))
     }
 
-    fun validateName(name: String): Boolean {
+    fun validateUsername(name: String): Boolean {
         return name.matches(Regex("^[a-zA-Z ]+$"))
     }
 
-    fun validatePhone(phone: String): Boolean {
+    fun validatePhoneNumber(phone: String): Boolean {
         return phone.matches(Regex("^\\d{10}$"))
     }
 

@@ -1,4 +1,4 @@
-package com.example.foodordering.ui.screen.manager.home.data
+package com.example.foodordering.ui.screen.manager.data
 
 import kotlin.random.Random
 
@@ -35,7 +35,7 @@ fun getRandomStatus(): String {
     return allowedStatuses.random()
 }
 
-private fun getRandomId(): String {
+fun getRandomId(): String {
     val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
     return (1..8).map { allowedChars.random() }.joinToString("")
 }

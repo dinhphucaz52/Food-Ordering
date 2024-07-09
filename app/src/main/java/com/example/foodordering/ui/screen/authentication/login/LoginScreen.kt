@@ -22,6 +22,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -108,8 +110,7 @@ fun LoginScreen(
 
             Button(
                 onClick = {
-                    // TODO(navigate to home screen)
-//                    navController.popBackStack()
+                    viewModel.login()
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Black
@@ -148,10 +149,21 @@ fun LoginScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(40.dp))
+            val errorState by remember {
+                viewModel.errorMessage
+            }
+            if (errorState.isNotEmpty()) {
+                Text(
+                    text = errorState,
+                    color = Color.Red,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+            }
 
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = if (errorState.isEmpty()) 8.dp else 40.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
