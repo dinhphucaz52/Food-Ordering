@@ -1,18 +1,27 @@
 package com.example.foodordering.ui.screen.customer.home
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foodordering.di.AppModule
+import com.example.foodordering.di.FakeData
+import com.example.foodordering.domain.model.Food
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
 
-    private val repository = AppModule.provideCustomerRepository()
+    var listFoodState = mutableStateListOf<Food>()
 
-    fun getCart() {
+    init {
         viewModelScope.launch {
-            repository.addCart("62b72b165e4e6e6e3c6a81e7")
+            listFoodState.clear()
+            listFoodState.addAll(FakeData.provideListFood())
         }
     }
+
+    private val repository by lazy {
+        AppModule.provideCustomerRepository()
+    }
+
 
 }

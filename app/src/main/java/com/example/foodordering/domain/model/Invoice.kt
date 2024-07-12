@@ -1,4 +1,4 @@
-package com.example.foodordering.ui.screen.manager.data
+package com.example.foodordering.domain.model
 
 import kotlin.random.Random
 

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -26,56 +27,38 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.foodordering.R
-import com.example.foodordering.ui.theme.DarkColorScheme
+import coil.compose.rememberAsyncImagePainter
+import com.example.foodordering.di.FakeData
+import com.example.foodordering.domain.model.Food
+import com.example.foodordering.ui.theme.Tertiary
+import com.example.foodordering.ui.theme.TextColor
 
+@Preview
 @Composable
 fun FoodRecyclerView(
-    popularImagesList: List<Int> = listOf<Int>(
-        R.drawable.burger,
-        R.drawable.burger2,
-        R.drawable.burger,
-        R.drawable.burger2,
-        R.drawable.burger,
-        R.drawable.burger2,
-        R.drawable.burger,
-        R.drawable.burger2,
-    ),
-    popularTitleNameList: List<String> = listOf(
-        "Chicken Burger", "Beef Burger",
-        "Chicken Burger", "Beef Burger",
-        "Chicken Burger", "Beef Burger",
-        "Chicken Burger", "Beef Burger",
-        "Chicken Burger", "Beef Burger",
-    ),
-    popularSubTitleItemList: List<String> = listOf(
-        "Burger King", "Shake Shack",
-        "Burger King", "Shake Shack",
-        "Burger King", "Shake Shack",
-        "Burger King", "Shake Shack",
-        "Burger King", "Shake Shack",
-    ),
+    listFood: List<Food> = FakeData.provideListFood(),
+    addCart: (Food) -> Unit = {}
 ) {
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
+            .wrapContentHeight()
+            .padding(vertical = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        items(popularImagesList.size) { item ->
+        itemsIndexed(listFood) { index, item ->
             Column(
                 modifier = Modifier
                     .width(200.dp)
                     .wrapContentHeight()
-                    .padding(vertical = 10.dp)
                     .clip(RoundedCornerShape(24.dp))
+                    .background(Color.White)
                     .border(
-                        width = 2.dp, color = DarkColorScheme.primary
+                        width = 2.dp, color = Tertiary, shape = RoundedCornerShape(24.dp)
                     )
                     .padding(top = 20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -83,22 +66,22 @@ fun FoodRecyclerView(
             ) {
                 Image(
                     modifier = Modifier.size(100.dp),
-                    painter = painterResource(popularImagesList[item]),
+                    painter = rememberAsyncImagePainter(item.gallery.first()),
                     contentDescription = "",
                     contentScale = ContentScale.Fit
                 )
 
                 Text(
-                    text = popularTitleNameList[item],
+                    text = item.name,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
                     color = Color.Black
                 )
 
                 Text(
-                    text = popularSubTitleItemList[item],
+                    text = item.id,
                     fontWeight = FontWeight.Normal,
-                    color = Color.Gray
+                    color = TextColor
                 )
 
                 Row(
@@ -109,18 +92,20 @@ fun FoodRecyclerView(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "100.000 VNĐ",
+                        text = "$${item.price}",
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold,
-                        color = DarkColorScheme.primary
+                        color = Tertiary
                     )
 
                     Box(
                         modifier = Modifier
                             .clip(CircleShape)
-                            .background(DarkColorScheme.primary)
+                            .background(Tertiary)
                             .padding(4.dp)
-                            .clickable { }, contentAlignment = Alignment.Center
+                            .clickable {
+                                addCart(item)
+                            }, contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             modifier = Modifier.size(20.dp, 20.dp),
@@ -135,10 +120,4 @@ fun FoodRecyclerView(
         }
     }
 
-}
-
-@Preview
-@Composable
-fun FoodRecyclerViewPreview() {
-    FoodRecyclerView()
 }

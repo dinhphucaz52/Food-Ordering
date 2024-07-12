@@ -5,7 +5,6 @@ import com.example.foodordering.data.dto.ResponseDTO
 import com.example.foodordering.data.dto.UserDTO
 import retrofit2.Call
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ApiService {
@@ -18,5 +17,4 @@ interface ApiService {
 
     @POST("cart/add")
     fun addCart(@Body body: HashMap<String, Any>): Call<ResponseDTO<CartDTO>>
-
 }

@@ -1,6 +1,5 @@
 package com.example.foodordering.ui.screen.splash
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,18 +14,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Button
-import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material.icons.filled.VerifiedUser
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -40,9 +32,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foodordering.R
-import com.example.foodordering.ui.screen.manager.home.HomeScreen
+import com.example.foodordering.ui.theme.Background
 import com.example.foodordering.ui.theme.DarkColorScheme
-import kotlinx.coroutines.launch
 
 @Composable
 fun Item(
@@ -51,7 +42,7 @@ fun Item(
     Column(
         modifier = modifier
             .padding(16.dp)
-            .background(color = color),
+            .background(color = Background),
         verticalArrangement = Arrangement.Center
     ) {
         Image(
@@ -81,7 +72,7 @@ fun TempScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(DarkColorScheme.primary)
+            .background(Background)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -98,12 +89,6 @@ fun TempScreen(
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(top = 24.dp)
         )
-
-        Button(onClick = {
-
-        }, modifier = Modifier.padding(top = 24.dp)) {
-            Text(text = "Test API")
-        }
 
         Row(
             modifier = Modifier.height(250.dp)
@@ -157,13 +142,44 @@ val myBrush = Brush.linearGradient(
     )
 )
 
-@Preview
+@Composable
+fun DrawerItem(
+    modifier: Modifier, isDividerVisible: Boolean = true
+) {
+    Column(
+        modifier = modifier.fillMaxWidth()
+    ) {
+        if (isDividerVisible) {
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp), color = Color.LightGray
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(imageVector = Icons.Default.VerifiedUser, contentDescription = null)
+            Text(
+                text = "Hello",
+                fontWeight = FontWeight.Bold,
+                fontSize = 28.sp,
+                modifier = Modifier.padding(start = 16.dp)
+            )
+        }
+    }
+}
+
 @Composable
 fun DrawerDetail() {
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .fillMaxWidth(0.8f)
+            .fillMaxWidth()
+            .background(Color.White)
     ) {
         Box(
             modifier = Modifier
@@ -177,8 +193,7 @@ fun DrawerDetail() {
                         )
                     )
                 )
-                .padding(16.dp),
-            contentAlignment = Alignment.Center
+                .padding(16.dp), contentAlignment = Alignment.Center
         ) {
             Image(
                 painter = painterResource(id = R.drawable.burger),
@@ -195,40 +210,9 @@ fun DrawerDetail() {
                         .fillMaxWidth()
                         .height(50.dp)
                 ) {
-                    Text(text = "Item $index")
+                    DrawerItem(Modifier, index != 0)
                 }
             }
-        }
-
-    }
-}
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Preview
-@Composable
-fun MainScreen() {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet {
-                DrawerDetail()
-            }
-        },
-    ) {
-        Scaffold(floatingActionButton = {
-            ExtendedFloatingActionButton(text = { Text("Show drawer") },
-                icon = { Icon(Icons.Filled.Add, contentDescription = "") },
-                onClick = {
-                    scope.launch {
-                        drawerState.apply {
-                            if (isClosed) open() else close()
-                        }
-                    }
-                })
-        }) { contentPadding ->
-            HomeScreen()
         }
     }
 }

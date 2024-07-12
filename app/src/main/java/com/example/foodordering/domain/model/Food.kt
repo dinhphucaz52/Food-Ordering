@@ -1,4 +1,4 @@
-package com.example.foodordering.ui.screen.manager.data
+package com.example.foodordering.domain.model
 
 data class Food(
     val id: String,
@@ -17,9 +17,9 @@ data class Food(
 
 fun getRandomGallery(): List<String> {
     return listOf(
-        "https://example.com/image1.jpg",
-        "https://example.com/image2.jpg",
-        "https://example.com/image3.jpg"
+        "https://fastly.picsum.photos/id/565/200/200.jpg?hmac=QvKo8qgzFFNcZoXCpT0CNMDTwWd3ynwqLXxrzK2o8fw",
+        "https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U",
+        "https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI"
     )
 }
 

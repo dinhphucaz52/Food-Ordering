@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberAsyncImagePainter
-import com.example.foodordering.ui.screen.manager.data.Food
+import com.example.foodordering.domain.model.Food
 import com.example.foodordering.ui.theme.DarkColorScheme
 import com.example.foodordering.util.FakeData
 import kotlinx.coroutines.launch

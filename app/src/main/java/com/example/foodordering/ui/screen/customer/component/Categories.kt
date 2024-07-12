@@ -22,6 +22,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.foodordering.R
+import com.example.foodordering.ui.theme.Primary
+import com.example.foodordering.ui.theme.Tertiary
 
 @Composable
 fun Categories(
@@ -55,8 +57,8 @@ fun Categories(
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(24.dp))
                     .background(
-                        color = if (item == 0) Color(0xFFff7b7b)
-                        else Color(0xFFfee8e8)
+                        color = if (item == 0) Tertiary
+                        else Primary
                     )
                     .fillMaxHeight()
                     .padding(top = 2.dp),

@@ -27,12 +27,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.foodordering.ui.theme.Background
 import com.example.foodordering.ui.theme.DarkColorScheme
+import com.example.foodordering.ui.theme.TextColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBarHome(
-    text: String = "Food Ordering"
+    text: String = "Food Ordering",
+    dashboardOnClick: () -> Unit = {},
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -43,14 +46,16 @@ fun TopAppBarHome(
             modifier = Modifier
                 .size(50.dp)
                 .clip(shape = CircleShape)
-                .background(Color.White),
+                .background(Background),
             contentAlignment = Alignment.Center
         ) {
-            IconButton(onClick = { }) {
+            IconButton(onClick = {
+                dashboardOnClick()
+            }) {
                 Icon(
                     imageVector = Icons.Outlined.Dashboard,
                     contentDescription = "",
-                    tint = DarkColorScheme.onPrimary
+                    tint = TextColor
                 )
 
             }
@@ -65,20 +70,20 @@ fun TopAppBarHome(
             fontWeight = FontWeight.Bold,
             fontFamily = FontFamily.Cursive,
             fontSize = 30.sp,
-            color = Color(0xFFE45050)
+            color = Color(0xFFffffef)
         )
         Box(
             modifier = Modifier
                 .size(50.dp)
                 .clip(shape = CircleShape)
-                .background(Color.White),
+                .background(Background),
             contentAlignment = Alignment.Center
         ) {
             IconButton(onClick = { }) {
                 Icon(
                     imageVector = Icons.Outlined.Notifications,
                     contentDescription = "",
-                    tint = DarkColorScheme.onPrimary
+                    tint = TextColor
                 )
 
             }

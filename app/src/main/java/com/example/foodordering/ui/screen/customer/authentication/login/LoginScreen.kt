@@ -1,9 +1,9 @@
-package com.example.foodordering.ui.screen.authentication.login
+package com.example.foodordering.ui.screen.customer.authentication.login
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -19,6 +20,8 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -34,13 +37,15 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.foodordering.R
 import com.example.foodordering.ui.component.MyTextField
-import com.example.foodordering.ui.theme.DarkColorScheme
+import com.example.foodordering.ui.theme.Background
+import com.example.foodordering.ui.theme.Tertiary
+import com.example.foodordering.ui.theme.TextColor
 
-
+@Preview
 @Composable
 fun LoginScreen(
-    onLoginSuccess: () -> Unit,
-    navigateRegister: () -> Unit,
+    onLoginSuccess: () -> Unit = {},
+    navigateRegister: () -> Unit = {},
     viewModel: LoginViewModel = viewModel(),
 ) {
 
@@ -54,7 +59,7 @@ fun LoginScreen(
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
-            .background(DarkColorScheme.background)
+            .background(Background)
             .verticalScroll(rememberScrollState())
     ) {
 
@@ -134,7 +139,7 @@ fun LoginScreen(
                     navigateRegister()
                 },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = DarkColorScheme.primary
+                    containerColor = Tertiary
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -170,19 +175,46 @@ fun LoginScreen(
                 TextButton(onClick = { }) {
                     Text(
                         text = "Forgot Password ?",
-                        color = Color.White,
+                        color = TextColor,
                     )
                 }
             }
 
         }
 
+//        if (viewModel.isLoginLoading.value) {
+//            Text(text = "Login",
+//                modifier = Modifier.constrainAs(createRef()) {
+//                    top.linkTo(parent.top)
+//                    start.linkTo(parent.start)
+//                    end.linkTo(parent.end)
+//                }
+//            )
+////            LoadingScreen(Modifier.constrainAs(createRef()) {
+////                top.linkTo(parent.top)
+////                start.linkTo(parent.start)
+////            })
+//        } else {
+//            Text(text = "Login **************",
+//                modifier = Modifier.constrainAs(createRef()) {
+//                    top.linkTo(parent.top)
+//                    start.linkTo(parent.start)
+//                    end.linkTo(parent.end)
+//                }
+//            )
+//        }
+
     }
 }
 
+@Preview
 @Composable
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun LoginScreenDarkPreview() {
-    LoginScreen({}, {})
-
+fun LoadingScreen(modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        CircularProgressIndicator(
+            modifier = Modifier.width(64.dp),
+            color = MaterialTheme.colorScheme.secondary,
+            trackColor = MaterialTheme.colorScheme.surfaceVariant,
+        )
+    }
 }

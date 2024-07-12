@@ -1,4 +1,4 @@
-package com.example.foodordering.ui.screen.authentication.register
+package com.example.foodordering.ui.screen.customer.authentication.register
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -36,7 +36,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.foodordering.R
 import com.example.foodordering.ui.component.MyTextField
+import com.example.foodordering.ui.theme.Background
 import com.example.foodordering.ui.theme.DarkColorScheme
+import com.example.foodordering.ui.theme.TextColor
 
 @Composable
 fun RegisterScreen(
@@ -58,7 +60,7 @@ fun RegisterScreen(
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
-            .background(DarkColorScheme.background)
+            .background(Background)
             .verticalScroll(rememberScrollState())
     ) {
 
@@ -166,7 +168,7 @@ fun RegisterScreen(
                 }) {
                     Text(
                         text = "Have An Account ?",
-                        color = Color.White,
+                        color = TextColor,
                     )
                 }
             }

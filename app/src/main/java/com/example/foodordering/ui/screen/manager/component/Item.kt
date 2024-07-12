@@ -26,9 +26,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.foodordering.R
+import com.example.foodordering.domain.model.Invoice
+import com.example.foodordering.ui.theme.Tertiary
 import com.example.foodordering.util.FakeData
-import com.example.foodordering.ui.screen.manager.data.Invoice
-import com.example.foodordering.ui.theme.DarkColorScheme
 
 
 @Composable
@@ -36,7 +36,7 @@ fun Item(modifier: Modifier = Modifier, invoice: Invoice = FakeData.provideInvoi
     ConstraintLayout(
         modifier = modifier
             .background(
-                color = DarkColorScheme.primary,
+                color = Tertiary,
                 shape = RoundedCornerShape(20.dp)
             )
             .fillMaxWidth()

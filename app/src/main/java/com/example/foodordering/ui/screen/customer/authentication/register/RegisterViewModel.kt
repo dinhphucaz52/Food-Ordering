@@ -1,4 +1,4 @@
-package com.example.foodordering.ui.screen.authentication.register
+package com.example.foodordering.ui.screen.customer.authentication.register
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
